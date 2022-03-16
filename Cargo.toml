@@ -6,3 +6,5 @@ license = "BSD-3-Clause"
 authors = ["Avery R. <contact@nekodjin.org>"]
 
 [dependencies]
+logos = "0.12"
+chumsky = "0.8"
