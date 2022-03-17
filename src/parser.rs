@@ -9,10 +9,10 @@ pub fn parser() -> impl Parser<Token, Expr, Error = Simple<Token>> {
 
         let atom = || {
             choice((
+                expr().delimited_by(just(Token::LPar), just(Token::RPar)),
                 just(Token::UwU).to(Expr::Atom(Value::UwU)),
                 just(Token::OwO).to(Expr::Atom(Value::OwO)),
                 just(Token::NwN).to(Expr::Atom(Value::NwN)),
-                expr().delimited_by(just(Token::LPar), just(Token::RPar)),
             ))
         };
 
@@ -27,4 +27,5 @@ pub fn parser() -> impl Parser<Token, Expr, Error = Simple<Token>> {
             .then(op().then(atom()).repeated())
             .foldl(|lhs, (op, rhs)| op(Box::new(lhs), Box::new(rhs)))
     })
+    .then_ignore(end())
 }
